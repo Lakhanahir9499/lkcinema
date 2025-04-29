@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hacked by Lakhan Lakhnotra</title>
   <style>
     body {
       margin: 0;
       background: #000;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,18 +20,21 @@
     }
 
     h1 a {
-      color: #6c5ce7;
-      text-decoration: none;
+      color: #00ff00;
       font-size: 2rem;
-      animation: glow 1.5s infinite alternate;
+      text-decoration: none;
+      animation: glitch 1.5s infinite alternate;
     }
 
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #6c5ce7, 0 0 10px #a8a5e6;
+    @keyframes glitch {
+      0% {
+        text-shadow: 0 0 5px #00ff00, 0 0 10px #00cc00;
       }
-      to {
-        text-shadow: 0 0 10px #6c5ce7, 0 0 20px #a8a5e6;
+      50% {
+        text-shadow: -2px 0 #00ff00, 2px 2px #00cc00;
+      }
+      100% {
+        text-shadow: 0 0 10px #00ff00, 0 0 20px #00cc00;
       }
     }
 
@@ -40,7 +43,7 @@
       width: 150px;
       height: 150px;
       border-radius: 50%;
-      border: 3px solid #6c5ce7;
+      border: 3px solid #00ff00;
       object-fit: cover;
     }
 
@@ -48,47 +51,62 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       z-index: -1;
+      background: black;
     }
   </style>
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
+  <canvas id="matrixCanvas"></canvas>
 
   <h1><a href="https://t.me/lakhan_lakhnotra" target="_blank">HACKED BY @LAKHAN_LAKHNOTRA</a></h1>
   <img src="https://github.com/Lakhanahir9499/Instagram/blob/main/profile.jpg" alt="Lakhan" class="round-photo">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bgCanvas"), alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    const canvas = document.getElementById("matrixCanvas");
+    const ctx = canvas.getContext("2d");
 
-    const particles = new THREE.BufferGeometry();
-    const particleCount = 500;
-    const positions = new Float32Array(particleCount * 3);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    for (let i = 0; i < particleCount * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 10;
+    const katakana = "アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲン";
+    const latin = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const nums = "0123456789";
+
+    const alphabet = katakana + latin + nums;
+
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
     }
 
-    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const material = new THREE.PointsMaterial({ color: 0x6c5ce7, size: 0.05 });
-    const particleSystem = new THREE.Points(particles, material);
-    scene.add(particleSystem);
+    setInterval(drawMatrix, 35);
 
-    camera.position.z = 5;
-
-    function animate() {
-      requestAnimationFrame(animate);
-      particleSystem.rotation.y += 0.002;
-      renderer.render(scene, camera);
-    }
-
-    animate();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>
