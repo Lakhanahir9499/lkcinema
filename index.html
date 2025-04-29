@@ -1,106 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hacked by @LAKHAN_LAKHNOTRA</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacked by Lakhan Lakhnotra</title>
   <style>
-    body, html {
+    body {
       margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background: black;
-      color: white;
+      background: #000;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
+      text-align: center;
     }
 
-    h1 {
+    h1 a {
+      color: #6c5ce7;
+      text-decoration: none;
       font-size: 2rem;
-      text-align: center;
       animation: glow 1.5s infinite alternate;
     }
 
-    a {
-      color: #00b0ff;
-      text-decoration: none;
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #6c5ce7, 0 0 10px #a8a5e6;
+      }
+      to {
+        text-shadow: 0 0 10px #6c5ce7, 0 0 20px #a8a5e6;
+      }
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .profile-pic {
+    .round-photo {
       margin-top: 20px;
       width: 150px;
       height: 150px;
       border-radius: 50%;
+      border: 3px solid #6c5ce7;
       object-fit: cover;
-      border: 4px solid #00b0ff;
     }
 
     canvas {
       position: fixed;
       top: 0;
       left: 0;
+      width: 100%;
+      height: 100%;
       z-index: -1;
-    }
-
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #00b0ff, 0 0 10px #00b0ff;
-      }
-      to {
-        text-shadow: 0 0 15px #00b0ff, 0 0 30px #00b0ff;
-      }
     }
   </style>
 </head>
 <body>
-  <h1>HACKED BY <a href="https://t.me/lakhan_lakhnotra" target="_blank">@LAKHAN_LAKHNOTRA</a></h1>
-  <img src="https://i.imgur.com/5Xg4vGx.jpeg" alt="Profile" class="profile-pic" />
-
   <canvas id="bgCanvas"></canvas>
+
+  <h1><a href="https://t.me/lakhan_lakhnotra" target="_blank">HACKED BY @LAKHAN_LAKHNOTRA</a></h1>
+  <img src="photo.jpg" alt="Lakhan" class="round-photo">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bgCanvas") });
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bgCanvas"), alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000); // black background
-    camera.position.z = 5;
 
     const particles = new THREE.BufferGeometry();
     const particleCount = 500;
     const positions = new Float32Array(particleCount * 3);
+
     for (let i = 0; i < particleCount * 3; i++) {
       positions[i] = (Math.random() - 0.5) * 10;
     }
 
     particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const material = new THREE.PointsMaterial({ color: 0x00b0ff, size: 0.05 });
+    const material = new THREE.PointsMaterial({ color: 0x6c5ce7, size: 0.05 });
     const particleSystem = new THREE.Points(particles, material);
     scene.add(particleSystem);
+
+    camera.position.z = 5;
 
     function animate() {
       requestAnimationFrame(animate);
       particleSystem.rotation.y += 0.002;
       renderer.render(scene, camera);
     }
-    animate();
 
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    animate();
   </script>
 </body>
 </html>
